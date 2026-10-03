@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Shopping Cart</title>
+    <style>
+        body { font-family: Arial; background: #f4f6f9; padding: 30px; }
+        .cart {
+            max-width: 700px;
+            margin: auto;
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+        }
+        .item {
+            padding: 15px 0;
+            border-bottom: 1px solid #ddd;
+        }
+        .total { font-size: 22px; font-weight: bold; }
+        a {
+            display: inline-block;
+            margin-top: 15px;
+            padding: 10px 16px;
+            background: #2563eb;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="cart">
+    <h1>🛒 Shopping Cart</h1>
+
+    {% for item in items %}
+        <div class="item">
+            <h2>{{ item.product.name }}</h2>
+            <p>Quantity: {{ item.quantity }}</p>
+            <p>Subtotal: ₹{{ item.subtotal }}</p>
+        </div>
+    {% empty %}
+        <p>Your cart is empty.</p>
+    {% endfor %}
+
+    <p class="total">Total: ₹{{ total }}</p>
+
+    <a href="/checkout/">🧾 Checkout</a>
+    <a href="/">← Continue Shopping</a>
+</div>
+
+</body>
+</html>

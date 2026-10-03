@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>E-Commerce Store</title>
+    <style>
+        body {
+            font-family: Arial;
+            background: #f4f6f9;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .header {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 25px;
+        }
+
+        .header a {
+            display: inline-block;
+            margin-right: 10px;
+            padding: 10px 15px;
+            background: #2563eb;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+        }
+
+        .product {
+            background: white;
+            padding: 20px;
+            margin-bottom: 15px;
+            border-radius: 12px;
+        }
+
+        .product a {
+            display: inline-block;
+            padding: 10px 15px;
+            background: #2563eb;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="header">
+    <h1>🛍️ My E-Commerce Store</h1>
+
+    {% if user.is_authenticated %}
+        <p>Welcome, <strong>{{ user.username }}</strong>!</p>
+        <a href="/logout/">Logout</a>
+    {% else %}
+        <a href="/login/">Login</a>
+        <a href="/signup/">Sign Up</a>
+    {% endif %}
+
+    <a href="/cart/">🛒 Cart</a>
+</div>
+
+<h2>Products</h2>
+
+{% for product in products %}
+    <div class="product">
+        <h2>{{ product.name }}</h2>
+        <p>{{ product.description }}</p>
+        <p><strong>₹{{ product.price }}</strong></p>
+        <p>Stock: {{ product.stock }}</p>
+
+        <a href="{% url 'product_detail' product.id %}">
+            View Details
+        </a>
+    </div>
+{% empty %}
+    <p>No products available.</p>
+{% endfor %}
+
+</body>
+</html>

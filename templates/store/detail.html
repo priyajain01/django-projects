@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ product.name }}</title>
+    <style>
+        body { font-family: Arial; background: #f4f6f9; padding: 30px; }
+        .product {
+            max-width: 600px;
+            margin: 40px auto;
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+        }
+        .price { font-size: 24px; font-weight: bold; }
+        .btn {
+            display: inline-block;
+            padding: 12px 20px;
+            margin: 8px 5px 0 0;
+            background: #2563eb;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="product">
+    <h1>{{ product.name }}</h1>
+    <p>{{ product.description }}</p>
+    <p class="price">₹{{ product.price }}</p>
+    <p>Stock: {{ product.stock }}</p>
+
+    {% if product.stock > 0 %}
+        <a href="{% url 'add_to_cart' product.id %}" class="btn">
+            🛒 Add to Cart
+        </a>
+    {% else %}
+        <p>Out of Stock</p>
+    {% endif %}
+
+    <a href="/" class="btn">← Back</a>
+    <a href="{% url 'cart' %}" class="btn">View Cart</a>
+</div>
+
+</body>
+</html>
