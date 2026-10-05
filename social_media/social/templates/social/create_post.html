@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Create Post</title>
+</head>
+
+<body style="font-family:Arial; background:#f4f6f9; padding:30px;">
+
+<div style="max-width:600px; margin:auto; background:white; padding:25px; border-radius:12px;">
+
+    <h1>✍️ Create Post</h1>
+
+    <form method="post">
+        {% csrf_token %}
+
+        <textarea
+            name="content"
+            placeholder="What's on your mind?"
+            required
+            style="width:100%; height:150px; padding:10px; box-sizing:border-box;">
+        </textarea>
+
+        <br><br>
+
+        <button
+            type="submit"
+            style="padding:10px 20px; background:#2563eb; color:white; border:none; border-radius:6px;">
+            Post
+        </button>
+    </form>
+
+    <br>
+
+    <a href="/" style="text-decoration:none;">
+        ← Back to Feed
+    </a>
+
+</div>
+
+</body>
+</html>

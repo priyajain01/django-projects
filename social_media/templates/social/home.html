@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Social Media</title>
+    <style>
+        body {
+            font-family: Arial;
+            background: #f4f6f9;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .header {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+        }
+
+        .post {
+            background: white;
+            padding: 20px;
+            margin-bottom: 15px;
+            border-radius: 12px;
+        }
+
+        .comment {
+            background: #f1f1f1;
+            padding: 8px;
+            margin-top: 8px;
+            border-radius: 6px;
+        }
+
+        a, button {
+            display: inline-block;
+            padding: 10px 15px;
+            background: #2563eb;
+            color: white;
+            text-decoration: none;
+            border: none;
+            border-radius: 6px;
+        }
+
+        textarea {
+            width: 100%;
+            padding: 8px;
+            box-sizing: border-box;
+        }
+
+        .username {
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="header">
+    <h1>📱 My Social Media</h1>
+
+    {% if user.is_authenticated %}
+        <p>Welcome, <strong>{{ user.username }}</strong>!</p>
+        <a href="/create/">✍️ Create Post</a>
+        <a href="/logout/">Logout</a>
+    {% else %}
+        <a href="/login/">Login</a>
+        <a href="/signup/">Sign Up</a>
+    {% endif %}
+</div>
+
+<h2>📰 Feed</h2>
+
+{% for post in posts %}
+
+<div class="post">
+
+    <p class="username">@{{ post.author.username }}</p>
+
+    <p>{{ post.content }}</p>
+
+    <small>{{ post.created_at }}</small>
+
+    <br><br>
+
+    {% if user.is_authenticated %}
+        <a href="{% url 'like_post' post.id %}">
+            ❤️ Like ({{ post.likes.count }})
+        </a>
+    {% else %}
+        <p>❤️ {{ post.likes.count }} Likes</p>
+    {% endif %}
+
+    <h3>💬 Comments</h3>
+
+    {% for comment in post.comments.all %}
+        <div class="comment">
+            <strong>@{{ comment.author.username }}</strong>
+            <br>
+            {{ comment.content }}
+        </div>
+    {% empty %}
+        <p>No comments yet.</p>
+    {% endfor %}
+
+    {% if user.is_authenticated %}
+        <form method="post" action="{% url 'add_comment' post.id %}">
+            {% csrf_token %}
+
+            <textarea
+                name="content"
+                placeholder="Write a comment..."
+                required>
+            </textarea>
+
+            <br><br>
+
+            <button type="submit">💬 Comment</button>
+        </form>
+    {% endif %}
+
+</div>
+
+{% empty %}
+
+<div class="post">
+    <p>No posts yet. Be the first to post!</p>
+</div>
+
+{% endfor %}
+
+</body>
+</html>
